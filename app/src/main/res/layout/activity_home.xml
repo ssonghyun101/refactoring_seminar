@@ -15,16 +15,17 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="30dp"
 >
+
         <ImageView
             android:id="@+id/image"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="100dp"
             android:background="@drawable/image"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="@id/layout_1"
             app:layout_constraintEnd_toEndOf="@id/layout_1"
-            android:layout_marginHorizontal="100dp"
-            ></ImageView>
+            app:layout_constraintStart_toStartOf="@id/layout_1"
+            app:layout_constraintTop_toTopOf="@id/layout_1"></ImageView>
 
         <TextView
             android:id="@+id/git"
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             android:text="ssonghyun101"
             app:layout_constraintTop_toBottomOf="@id/image"
+            app:layout_constraintStart_toStartOf="@id/layout_1"
             android:layout_marginTop="50dp"
             ></TextView>
 
@@ -41,6 +43,7 @@
             android:text="김송현"
             app:layout_constraintTop_toBottomOf="@id/git"
             android:layout_marginTop="3dp"
+            app:layout_constraintStart_toStartOf="@id/layout_1"
             android:id="@+id/name"
             ></TextView>
         <TextView
@@ -48,6 +51,7 @@
             android:layout_height="wrap_content"
             android:text="개발하는 기획자가 되고 싶어용"
             app:layout_constraintTop_toBottomOf="@id/name"
+            app:layout_constraintStart_toStartOf="@id/layout_1"
             android:layout_marginTop="3dp"
             ></TextView>
 
