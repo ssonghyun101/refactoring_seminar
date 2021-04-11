@@ -9,7 +9,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        Toast.makeText(this,"안녕하세요", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,"로그인 성공", Toast.LENGTH_SHORT).show()
     }
 
     override fun onStart() {

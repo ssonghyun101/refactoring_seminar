@@ -18,6 +18,8 @@
            android:id="@+id/name"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
+           app:layout_constraintStart_toStartOf="@id/layout_name"
+           app:layout_constraintTop_toTopOf="@id/layout_name"
            android:text="이름"/>
 
        <EditText
@@ -26,8 +28,8 @@
            android:layout_height="wrap_content"
            android:layout_marginTop="3dp"
            android:hint="이름을 입력해주세요"
-
-           app:layout_constraintTop_toBottomOf="@id/name" />
+           app:layout_constraintTop_toBottomOf="@id/name"
+           app:layout_constraintStart_toStartOf="@id/layout_name"/>
    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,6 +45,8 @@
             android:id="@+id/id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/layout_id"
+            app:layout_constraintTop_toTopOf="@id/layout_id"
             android:text="깃허브"></TextView>
 
         <EditText
@@ -51,6 +55,7 @@
             android:layout_height="wrap_content"
             android:hint="ID를 입력해주세요"
             app:layout_constraintTop_toBottomOf="@+id/id"
+            app:layout_constraintStart_toStartOf="@id/layout_id"
             android:layout_marginTop="3dp"></EditText>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -65,6 +70,8 @@
 
         <TextView
             android:id="@+id/pwd"
+            app:layout_constraintStart_toStartOf="@id/constraintLayout"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="비밀번호"></TextView>
@@ -76,6 +83,7 @@
             android:layout_marginTop="3dp"
             android:inputType="textPassword"
             android:hint="비밀번호를 입력해주세요"
+            app:layout_constraintStart_toStartOf="@id/constraintLayout"
             app:layout_constraintTop_toBottomOf="@+id/pwd"></EditText>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

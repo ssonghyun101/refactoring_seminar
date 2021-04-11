@@ -29,7 +29,7 @@ class SignInActivity : AppCompatActivity() {
         //setContentView로 xml받아오기!
 
         initButtonClickEvent()
-        //SignUp()
+        SignUp()
         GetData()
 
 
@@ -68,12 +68,12 @@ class SignInActivity : AppCompatActivity() {
 
 
 
-    /*private fun SignUp(){
+    private fun SignUp(){
         binding.signButton.setOnClickListener(){
             val nextIntent2 = Intent(this,SignUpActivity::class.java)
             startActivity(nextIntent2)
         }
-    }*/
+    }
 
     private fun GetData(){
 
