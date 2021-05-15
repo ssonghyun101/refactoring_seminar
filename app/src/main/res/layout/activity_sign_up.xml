@@ -90,6 +90,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/rect"
         android:layout_marginTop="30dp"
         android:text="SIGN UP"
         android:id="@+id/signup_btn"
