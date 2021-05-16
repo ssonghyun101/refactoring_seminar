@@ -53,13 +53,19 @@ class SignInActivity : AppCompatActivity() {
             ) {
                 if(response.isSuccessful){
                     val data = response.body()?.data
-                    Toast.makeText(this@SignInActivity,data?.user_nickname,Toast.LENGTH_SHORT)
+                   Toast.makeText(this@SignInActivity,data?.user_nickname,Toast.LENGTH_SHORT)
+                     //       .show()
+                    Toast.makeText(this@SignInActivity,"어서와 서버통신은 처음이지?",Toast.LENGTH_LONG)
                             .show()
+                    Log.d("서버통신","어서와 서버통신은 처음이지?")
+
 
                     intent = Intent(this@SignInActivity,HomeActivity::class.java)
                     startActivity(intent)
 
                 }else{
+                    Log.d("서버통신","서버통신 실패")
+
 
                 }
 
