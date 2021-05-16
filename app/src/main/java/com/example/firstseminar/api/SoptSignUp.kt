@@ -1,6 +1,7 @@
 package com.example.firstseminar.api
 
 import com.example.firstseminar.request.RequsetSignData
+import com.example.firstseminar.response.ResponseSignData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -16,6 +17,6 @@ interface SoptSignUp {
     @POST("login/signup")
     fun postSign(
             @Body  body : RequsetSignData
-    ) : Call<RequsetSignData>
+    ) : Call<ResponseSignData>
 
 }

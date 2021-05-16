@@ -40,7 +40,7 @@ class SignUpActivity : AppCompatActivity() {
 
             //일단 입력값들 다 받아오고!!!!!
 
-            if(email.isBlank() && pwd.isBlank() && pwd.isBlank() && Sex.isBlank()&& nickname.isBlank()&& phone.isBlank()&& birth.isBlank() ){
+            if(email.isBlank() || pwd.isBlank() ||  Sex.isBlank()|| nickname.isBlank()|| phone.isBlank()|| birth.isBlank() ){
                 Toast.makeText(this,"빈 칸이 있는지 확인해주세요",
                     Toast.LENGTH_SHORT)
                     .show()
@@ -54,6 +54,8 @@ class SignUpActivity : AppCompatActivity() {
                 //회원가입 버튼 클릭시
                 //서버에 전달된 회원가입 데이터 출력
             // & SignIn Activity 이동
+
+                //서버로 보내줄 data묶음들
                 val requsetSignData=RequsetSignData(
                         email = binding.signInputEmail.text.toString(),
                         password= binding.signInnputPwd.text.toString(),
@@ -65,7 +67,7 @@ class SignUpActivity : AppCompatActivity() {
                 )
 
                 val call: Call<ResponseSignData> = SignCreater.soptSignUp
-                        .postSign(RequsetSignData)
+                        .postSign(requsetSignData)
 
                 call.enqueue(object : Callback<ResponseSignData> {
                     override fun onResponse(

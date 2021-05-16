@@ -142,7 +142,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/phone_text"
                 app:layout_constraintStart_toStartOf="@+id/phone"
                 android:hint="전화번호입력"
-                android:inputType="phone"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
