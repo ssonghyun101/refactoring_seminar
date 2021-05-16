@@ -7,6 +7,7 @@ import android.renderscript.ScriptGroup
 import android.util.Log
 import android.widget.Toast
 import com.example.firstseminar.databinding.ActivitySignUpBinding
+import com.example.firstseminar.request.RequsetSignData
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
@@ -44,14 +45,20 @@ class SignUpActivity : AppCompatActivity() {
             //종료 전에 꼭! putExtra를 이용해 모든 값을 intent에 넣어 전<합니다;
 
             else{
-                //Intent를 통해 액티비티를 전환할 때에 putExtra를 통해 String이나 Int 등 간단한 데이터를 전달할 수 있다.
-            // putExtra(key: String, value: 간단한 데이터) 의 형식을 띤다.
+                //회원가입 버튼 클릭시
+                //서버에 전달된 회원가입 데이터 출력
+            // & SignIn Activity 이동
+                val RequsetSignData=RequsetSignData(
+                        //email, pwd,sex,nickname,phone,birth
 
-                val nextIntent = Intent(this, SignInActivity::class.java)
-                nextIntent.putExtra("id" ,id.toString())
-                nextIntent.putExtra("pwd",pwd.toString())
-                nextIntent.putExtra("name",name.toString())
-                startActivity(nextIntent)
+
+
+
+                )
+
+
+
+
 
             }
         }
