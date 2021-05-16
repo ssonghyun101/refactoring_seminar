@@ -10,6 +10,7 @@ import com.example.firstseminar.api.ServiceCreater
 import com.example.firstseminar.databinding.ActivityMain2Binding
 import com.example.firstseminar.databinding.ActivityMainBinding
 import com.example.firstseminar.request.RequsetLoginData
+import com.example.firstseminar.response.ResponseLoginData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,18 +39,18 @@ class SignInActivity : AppCompatActivity() {
         GetData()
 
         val requsetLoginData = RequsetLoginData(
-                id = binding.inputId.text.toString(),
+                email = binding.inputId.text.toString(),
                 password = binding.inputPwd.text.toString()
         )
 
-        val call: Call<RequsetLoginData> = ServiceCreater.soptService
+        val call: Call<ResponseLoginData> = ServiceCreater.soptService
                 .postLogin(requsetLoginData)
 
-        call.enqueue(object  : Callback<RequsetLoginData>{
+        call.enqueue(object : Callback<ResponseLoginData> {
             override fun onResponse(
-                    call: Call<RequsetLoginData>,
-                    response: Response<RequsetLoginData>
-            ){
+                    call: Call<ResponseLoginData>,
+                    response: Response<ResponseLoginData>
+            ) {
                 if(response.isSuccessful){
                     val data = response.body()?.data
                     Toast.makeText(this@SignInActivity,data?.user_nickname,Toast.LENGTH_SHORT)
@@ -64,7 +65,7 @@ class SignInActivity : AppCompatActivity() {
 
             }
 
-            override fun onFailure(call: Call<RequsetLoginData>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseLoginData>, t: Throwable) {
                 Log.d("NetworkTest","error:$t")
             }
 
@@ -181,3 +182,5 @@ class SignInActivity : AppCompatActivity() {
 
 
 }
+
+
