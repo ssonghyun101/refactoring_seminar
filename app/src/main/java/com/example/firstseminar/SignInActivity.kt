@@ -21,7 +21,6 @@ class SignInActivity : AppCompatActivity() {
     //커멜 표기법인 ActivityView 으로 바인딩 객체를 만든당!
     // 다른 사람이 메인액티비티에 접근해서 못바꾸게 private
     //나중에 초기화하기 위해서 lateinit를 써준다
-    // 근데 왜 variable 이지 ?????
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //onCreate() : Activity가 실행되면서 최초 실행되는 메소드
@@ -33,46 +32,9 @@ class SignInActivity : AppCompatActivity() {
         // 사용할 뷰에 대한 참조. .root로 get호출
         //setContentView로 xml받아오기!
 
-        initButtonClickEvent()
         SignUp()
         GetData()
-
-        val requsetLoginData = RequsetLoginData(
-                email = binding.inputId.text.toString(),
-                password = binding.inputPwd.text.toString()
-        )
-
-        val call: Call<ResponseLoginData> = ServiceCreater.soptService
-                .postLogin(requsetLoginData)
-
-        call.enqueue(object : Callback<ResponseLoginData> {
-            override fun onResponse(
-                    call: Call<ResponseLoginData>,
-                    response: Response<ResponseLoginData>
-            ) {
-                if(response.isSuccessful){
-                    val data = response.body()?.data
-                   Toast.makeText(this@SignInActivity,data?.user_nickname,Toast.LENGTH_SHORT)
-                            .show()
-
-                    Log.d("서버통신","어서와 서버통신은 처음이지?")
-                    intent = Intent(this@SignInActivity,HomeActivity::class.java)
-                    startActivity(intent)
-
-                }else{
-                    Log.d("서버통신","서버통신 실패")
-
-
-                }
-
-            }
-
-            override fun onFailure(call: Call<ResponseLoginData>, t: Throwable) {
-                Log.d("NetworkTest","error:$t")
-            }
-
-
-        })
+        initButtonClickEvent()
 
 
 
@@ -82,6 +44,8 @@ class SignInActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener{
             val user_id :String = binding.inputId.text.toString()
             val user_pwd : String = binding.inputPwd.text.toString()
+
+
             //사용자가 입력한 값 스트링으로 받아오기
             if(user_id.isBlank() || user_pwd.isBlank()) {
                 //아이디가 비어있는 경우 실행함!!!
@@ -92,11 +56,43 @@ class SignInActivity : AppCompatActivity() {
                 //가독성을 위해서 띄어주자
             }
             else{
-                //여기 뭐한거냐 ㅠㅠㅠㅠㅠㅠㅠ 아 와이파이 끊기는거 개빡치네 진자 ㅜㅜㅜ
-                //Toast.makeText(this,"안녕하세요",Toast.LENGTH_SHORT).show()
-                //INTENT 홈액티비티로 이동!!!!!!!!! 그다음에 토스트 메시지 띄우기
-                val nextIntent = Intent(this, HomeActivity::class.java)
-                startActivity(nextIntent)
+                val requsetLoginData = RequsetLoginData(
+                        email = binding.inputId.text.toString(),
+                        password = binding.inputPwd.text.toString()
+                )
+
+                val call: Call<ResponseLoginData> = ServiceCreater.soptService
+                        .postLogin(requsetLoginData)
+
+                call.enqueue(object : Callback<ResponseLoginData> {
+                    override fun onResponse(
+                            call: Call<ResponseLoginData>,
+                            response: Response<ResponseLoginData>
+                    ) {
+                        if(response.isSuccessful){
+                            val data = response.body()?.data
+                            Toast.makeText(this@SignInActivity,data?.user_nickname,Toast.LENGTH_SHORT)
+                                    .show()
+
+                            Log.d("서버통신","어서와 서버통신은 처음이지?")
+                            intent = Intent(this@SignInActivity,HomeActivity::class.java)
+                            startActivity(intent)
+
+                        }else{
+                            Log.d("서버통신","실패")
+
+
+
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<ResponseLoginData>, t: Throwable) {
+                        Log.d("NetworkTest","error:$t")
+                    }
+
+
+                })
 
             }
 
