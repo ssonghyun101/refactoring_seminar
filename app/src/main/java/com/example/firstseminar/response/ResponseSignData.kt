@@ -11,7 +11,7 @@ data class ResponseSignData(
 
     data class SignData(
             @SerializedName("nickname")
-            val user_nickname: String
+            val nickname: String
 
     )
 }

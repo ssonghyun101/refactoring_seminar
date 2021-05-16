@@ -33,7 +33,6 @@ class SignInActivity : AppCompatActivity() {
         //setContentView로 xml받아오기!
 
         SignUp()
-        GetData()
         initButtonClickEvent()
 
 
@@ -110,37 +109,8 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private fun GetData(){
-
-        var intent = getIntent()
-        if(intent.hasExtra("id")){
-            //잘못된 값을 꺼내올 수 있기 때문에 null체크!
-
-            // 첫번째버전
-            binding.inputId.setText(intent.getStringExtra("id"))
 
 
-            //언제든 다른값을 입력할 수 있어서 var로 해주기!! 근데 위에는 왜 val인거지
-
-            /*두번째버전
-            var user_id : String = binding.inputId.text.toString()
-            user_id = intent.getStringExtra("id")
-            binding.inputId.setText(user_id)
-             */
-        }
-
-        if(intent.hasExtra("pwd")){
-            //첫번째 버전
-            binding.inputPwd.setText(intent.getStringExtra("pwd"))
-
-
-            /*두번째버전
-            var user_pwd : String = binding.inputPwd.text.toString()
-            user_pwd = intent.getStringExtra("pwd")
-            binding.inputPwd.setText(user_pwd)*/
-
-        }
-    }
     //생명주기 메소드는 AppCompatActivity 에 있으며, 오버라이드하여, 호출시마다 로그를 찍도록 설정해보
     override fun onStart() {
         super.onStart()

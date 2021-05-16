@@ -21,7 +21,6 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-
         ClickSignUP()
     }
 
@@ -59,7 +58,7 @@ class SignUpActivity : AppCompatActivity() {
                 val requsetSignData=RequsetSignData(
                         email = binding.signInputEmail.text.toString(),
                         password= binding.signInnputPwd.text.toString(),
-                        Sex = binding.sex.text.toString(),
+                        sex = binding.sex.text.toString(),
                         nickname = binding.nicknameInput.text.toString(),
                         phone = binding.phoneInput.text.toString(),
                         birth = binding.birthInput.text.toString()
@@ -78,7 +77,7 @@ class SignUpActivity : AppCompatActivity() {
                     ) {
                         if (response.isSuccessful) {
                             val data = response.body()?.data
-                            Toast.makeText(this@SignUpActivity, data?.user_nickname, Toast.LENGTH_LONG)
+                            Toast.makeText(this@SignUpActivity, data?.nickname, Toast.LENGTH_LONG)
                                     .show()
 
                             Log.d("회원가입 서버통신", "성공")
