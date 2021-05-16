@@ -1,13 +1,17 @@
 package com.example.firstseminar
-
+import android.app.Instrumentation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.renderscript.ScriptGroup
 import android.util.Log
 import android.widget.Toast
+import com.example.firstseminar.api.SignCreater
 import com.example.firstseminar.databinding.ActivitySignUpBinding
 import com.example.firstseminar.request.RequsetSignData
+import com.example.firstseminar.response.ResponseSignData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
@@ -27,14 +31,16 @@ class SignUpActivity : AppCompatActivity() {
             // 모든 EditText에 데이터가 없는경우! - 
             //”빈 칸이 있는지 확인해 세요” 라고 사용자에게 보여줍니다
 
-            var id : String = binding.signInputId.text.toString()
-            // 왜 var ? 아 입력하는값이 그떄그떄 마다 달라서???
             var pwd : String = binding.signInnputPwd.text.toString()
-            var name : String = binding.signInputName.text.toString()
+            var email : String = binding.signInputEmail.text.toString()
+            var Sex : String =  binding.sex.text.toString()
+            var nickname : String = binding.nicknameInput.text.toString()
+            var phone : String  = binding.phoneInput.text.toString()
+            var birth : String = binding.birthInput.text.toString()
 
             //일단 입력값들 다 받아오고!!!!!
 
-            if(id.isBlank() && pwd.isBlank() && name.isBlank()){
+            if(email.isBlank() && pwd.isBlank() && pwd.isBlank() && Sex.isBlank()&& nickname.isBlank()&& phone.isBlank()&& birth.isBlank() ){
                 Toast.makeText(this,"빈 칸이 있는지 확인해주세요",
                     Toast.LENGTH_SHORT)
                     .show()
@@ -48,22 +54,54 @@ class SignUpActivity : AppCompatActivity() {
                 //회원가입 버튼 클릭시
                 //서버에 전달된 회원가입 데이터 출력
             // & SignIn Activity 이동
-                val RequsetSignData=RequsetSignData(
-                        //email, pwd,sex,nickname,phone,birth
-
-
-
+                val requsetSignData=RequsetSignData(
+                        email = binding.signInputEmail.text.toString(),
+                        password= binding.signInnputPwd.text.toString(),
+                        Sex = binding.sex.text.toString(),
+                        nickname = binding.nicknameInput.text.toString(),
+                        phone = binding.phoneInput.text.toString(),
+                        birth = binding.birthInput.text.toString()
 
                 )
 
+                val call: Call<ResponseSignData> = SignCreater.soptSignUp
+                        .postSign(RequsetSignData)
 
+                call.enqueue(object : Callback<ResponseSignData> {
+                    override fun onResponse(
 
+                            call: Call<ResponseSignData>,
+                            response: Response<ResponseSignData>
+
+                    ) {
+                        if (response.isSuccessful) {
+                            val data = response.body()?.data
+                            Toast.makeText(this@SignUpActivity, data?.user_nickname, Toast.LENGTH_LONG)
+                                    .show()
+
+                            Log.d("회원가입 서버통신", "성공")
+                            intent = Intent(this@SignUpActivity, SignInActivity::class.java)
+                            startActivity(intent)
+
+                        } else {
+                            Log.d("회원가입 서버통신", "실패")
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<ResponseSignData>, t: Throwable) {
+                        Log.d("NetworkTest", "error")
+                    }
+                })
+
+            }
+            }
 
 
             }
-        }
 
-    }
+
+
 
     override fun onStart() {
         super.onStart()
@@ -97,3 +135,9 @@ class SignUpActivity : AppCompatActivity() {
         Log.d("회원가입화면","onRestart")
     }
 }
+
+
+
+
+
+

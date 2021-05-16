@@ -1,6 +1,5 @@
 package com.example.firstseminar.api
 
-
 import com.example.firstseminar.request.RequsetSignData
 import retrofit2.Call
 import retrofit2.http.Body
