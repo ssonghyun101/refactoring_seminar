@@ -2,11 +2,11 @@ package com.example.firstseminar.api
 
 import android.telecom.Call
 import com.example.firstseminar.request.RequsetLoginData
-import com.example.firstseminar.response.ResponseLoginData
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
+import com.example.firstseminar.response.ResponseLoginData as ResponseLoginData1
 
 interface SoptService {
     //sopt 예제서버에서 서비스 제공받아서 이름 이렇게 지음
@@ -21,18 +21,19 @@ interface SoptService {
     // 행위 요청
     // /login/singnin 이란 식별자에 해당하는 데이터를
     // body에 담아 보낸다
-  /* @POST('/login/signin')
+  @POST("/login/signin")
     fun postLogin(
         // RequestLoginDataType  body 변수를
         // Request Body로 설정!
         @Body body : RequsetLoginData
 
-    ) : Call<ResponseLoginData>
+    ) : Call<ResponseLoginData1>
 
     //Retrofit에서 제공하는
     //동기 혹은 비동기 통신을
 // 도와줌
-*/
+
+
 
 
 }

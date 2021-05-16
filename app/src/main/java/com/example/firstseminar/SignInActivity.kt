@@ -6,8 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.firstseminar.api.ServiceCreater
 import com.example.firstseminar.databinding.ActivityMain2Binding
 import com.example.firstseminar.databinding.ActivityMainBinding
+import com.example.firstseminar.request.RequsetLoginData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -32,9 +37,40 @@ class SignInActivity : AppCompatActivity() {
         SignUp()
         GetData()
 
+        val requsetLoginData = RequsetLoginData(
+                id = binding.inputId.text.toString(),
+                password = binding.inputPwd.text.toString()
+        )
+
+        val call: Call<RequsetLoginData> = ServiceCreater.soptService
+                .postLogin(requsetLoginData)
+
+        call.enqueue(object  : Callback<RequsetLoginData>{
+            override fun onResponse(
+                    call: Call<RequsetLoginData>,
+                    response: Response<RequsetLoginData>
+            ){
+                if(response.isSuccessful){
+                    val data = response.body()?.data
+                    Toast.makeText(this@SignInActivity,data?.user_nickname,Toast.LENGTH_SHORT)
+                            .show()
+
+                    intent = Intent(this@SignInActivity,HomeActivity::class.java)
+                    startActivity(intent)
+
+                }else{
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<RequsetLoginData>, t: Throwable) {
+                Log.d("NetworkTest","error:$t")
+            }
 
 
-        //저기 있는 클릭이벤트를 실행해주는거 아 ㅋㅋㅋㅋㅋㅋㅋ 저게 이거구나.. 아...바본가.....
+        })
+
 
 
         }
