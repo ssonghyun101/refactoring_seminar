@@ -14,7 +14,7 @@ interface SoptSignUp {
 
     //회원가입 서버 Retrofit interface 설계
 
-    @POST("login/signup")
+    @POST("/login/signup")
     fun postSign(
             @Body  body : RequsetSignData
     ) : Call<ResponseSignData>
