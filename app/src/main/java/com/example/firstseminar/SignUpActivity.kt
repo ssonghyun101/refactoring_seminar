@@ -1,11 +1,11 @@
 package com.example.firstseminar
-import android.app.Instrumentation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.firstseminar.api.SignCreater
+import com.example.firstseminar.api.SignCreater.soptSignUp
 import com.example.firstseminar.databinding.ActivitySignUpBinding
 import com.example.firstseminar.request.RequsetSignData
 import com.example.firstseminar.response.ResponseSignData
@@ -21,32 +21,31 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-        ClickSignUP()
+        clickSignUp()
     }
 
-    private fun ClickSignUP() {
+    private fun clickSignUp() {
 
-        binding.signupBtn.setOnClickListener(){
-            // 모든 EditText에 데이터가 없는경우! - 
+        binding.signupBtn.setOnClickListener{
+            // 모든 EditText에 데이터가 없는경우!
             //”빈 칸이 있는지 확인해 세요” 라고 사용자에게 보여줍니다
 
-            var pwd : String = binding.signInnputPwd.text.toString()
-            var email : String = binding.signInputEmail.text.toString()
-            var Sex : String =  binding.sex.text.toString()
-            var nickname : String = binding.nicknameInput.text.toString()
-            var phone : String  = binding.phoneInput.text.toString()
-            var birth : String = binding.birthInput.text.toString()
+            val pwd : String = binding.signInnputPwd.text.toString()
+            val email : String = binding.signInputEmail.text.toString()
+            val nickname : String = binding.nicknameInput.text.toString()
+            val phone : String  = binding.phoneInput.text.toString()
+            val birth : String = binding.birthInput.text.toString()
 
             //일단 입력값들 다 받아오고!!!!!
 
-            if(email.isBlank() || pwd.isBlank() ||  Sex.isBlank()|| nickname.isBlank()|| phone.isBlank()|| birth.isBlank() ){
+            if(email.isBlank() || pwd.isBlank() || nickname.isBlank()|| phone.isBlank()|| birth.isBlank() ){
                 Toast.makeText(this,"빈 칸이 있는지 확인해주세요",
                     Toast.LENGTH_SHORT)
                     .show()
             }
 
-            //- 모든 EditText에 데이터가 있는경우! - 
-            //초기 SignUpActivity로 돌아갈 수 있도록 종료합니다 
+            //- 모든 EditText에 데이터가 있는경우!
+            //초기 SignUpActivity로 돌아갈 수 있도록 종료합니다
             //종료 전에 꼭! putExtra를 이용해 모든 값을 intent에 넣어 전<합니다;
 
             else{
@@ -58,14 +57,13 @@ class SignUpActivity : AppCompatActivity() {
                 val requsetSignData=RequsetSignData(
                         email = binding.signInputEmail.text.toString(),
                         password= binding.signInnputPwd.text.toString(),
-                        sex = binding.sex.text.toString(),
                         nickname = binding.nicknameInput.text.toString(),
                         phone = binding.phoneInput.text.toString(),
                         birth = binding.birthInput.text.toString()
 
                 )
 
-                val call: Call<ResponseSignData> = SignCreater.soptSignUp
+                val call: Call<ResponseSignData> = soptSignUp
                         .postSign(requsetSignData)
 
                 call.enqueue(object : Callback<ResponseSignData> {

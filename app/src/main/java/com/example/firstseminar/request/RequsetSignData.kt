@@ -5,6 +5,6 @@ data class RequsetSignData(
         val password : String,
         val nickname : String,
         val phone : String,
-        val birth : String
+        val birth : String,
         //string아닌거 같은데???
 )
