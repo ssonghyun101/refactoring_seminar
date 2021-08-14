@@ -32,7 +32,7 @@ class SignInActivity : AppCompatActivity() {
         // 사용할 뷰에 대한 참조. .root로 get호출
         //setContentView로 xml받아오기!
 
-        SignUp()
+        signUp()
         initButtonClickEvent()
 
 
@@ -41,8 +41,8 @@ class SignInActivity : AppCompatActivity() {
 
     private fun initButtonClickEvent(){
         binding.loginButton.setOnClickListener{
-            val user_id :String = binding.inputId.text.toString()
-            val user_pwd : String = binding.inputPwd.text.toString()
+            val user_id  = binding.inputId.text.toString()
+            val user_pwd = binding.inputPwd.text.toString()
 
 
             //사용자가 입력한 값 스트링으로 받아오기
@@ -102,7 +102,7 @@ class SignInActivity : AppCompatActivity() {
 
 
 
-    private fun SignUp(){
+    private fun signUp(){
         binding.signButton.setOnClickListener(){
             val nextIntent2 = Intent(this,SignUpActivity::class.java)
             startActivity(nextIntent2)

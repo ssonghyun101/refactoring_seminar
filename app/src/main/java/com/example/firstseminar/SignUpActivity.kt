@@ -1,4 +1,5 @@
 package com.example.firstseminar
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,82 +23,92 @@ class SignUpActivity : AppCompatActivity() {
 
         setContentView(binding.root)
         clickSignUp()
+
     }
 
     private fun clickSignUp() {
 
         binding.signupBtn.setOnClickListener{
-            // 모든 EditText에 데이터가 없는경우!
-            //”빈 칸이 있는지 확인해 세요” 라고 사용자에게 보여줍니다
+            checkBlank()
+        }
+    }
 
-            val pwd : String = binding.signInnputPwd.text.toString()
-            val email : String = binding.signInputEmail.text.toString()
-            val nickname : String = binding.nicknameInput.text.toString()
-            val phone : String  = binding.phoneInput.text.toString()
-            val birth : String = binding.birthInput.text.toString()
 
-            //일단 입력값들 다 받아오고!!!!!
+    private fun checkBlank(){
+        binding.apply {
+            val pwd = signInnputPwd.text.toString()
+            val email = signInputEmail.text.toString()
+            val nickname = nicknameInput.text.toString()
+            val phone  = phoneInput.text.toString()
+            val birth  = birthInput.text.toString()
 
             if(email.isBlank() || pwd.isBlank() || nickname.isBlank()|| phone.isBlank()|| birth.isBlank() ){
-                Toast.makeText(this,"빈 칸이 있는지 확인해주세요",
+                Toast.makeText(this@SignUpActivity,"빈 칸이 있는지 확인해주세요",
                     Toast.LENGTH_SHORT)
                     .show()
             }
 
-            //- 모든 EditText에 데이터가 있는경우!
-            //초기 SignUpActivity로 돌아갈 수 있도록 종료합니다
-            //종료 전에 꼭! putExtra를 이용해 모든 값을 intent에 넣어 전<합니다;
-
             else{
-                //회원가입 버튼 클릭시
-                //서버에 전달된 회원가입 데이터 출력
+                netWorkSignUp()
+            }
+
+        }
+    }
+
+    private fun netWorkSignUp(){
+            //회원가입 버튼 클릭시
+            //서버에 전달된 회원가입 데이터 출력
             // & SignIn Activity 이동
 
-                //서버로 보내줄 data묶음들
-                val requsetSignData=RequsetSignData(
-                        email = binding.signInputEmail.text.toString(),
-                        password= binding.signInnputPwd.text.toString(),
-                        nickname = binding.nicknameInput.text.toString(),
-                        phone = binding.phoneInput.text.toString(),
-                        birth = binding.birthInput.text.toString()
+            //서버로 보내줄 data묶음들
 
-                )
+            val requsetSignData=RequsetSignData(
 
-                val call: Call<ResponseSignData> = soptSignUp
-                        .postSign(requsetSignData)
+                email = binding.signInputEmail.text.toString(),
+                password= binding.signInnputPwd.text.toString(),
+                nickname = binding.nicknameInput.text.toString(),
+                phone = binding.phoneInput.text.toString(),
+                birth = binding.birthInput.text.toString()
 
-                call.enqueue(object : Callback<ResponseSignData> {
-                    override fun onResponse(
+            )
 
-                            call: Call<ResponseSignData>,
-                            response: Response<ResponseSignData>
+            val call: Call<ResponseSignData> = soptSignUp
+                .postSign(requsetSignData)
 
-                    ) {
-                        if (response.isSuccessful) {
-                            val data = response.body()?.data
-                            Toast.makeText(this@SignUpActivity, data?.nickname, Toast.LENGTH_LONG)
-                                    .show()
+            call.enqueue(object : Callback<ResponseSignData> {
+                override fun onResponse(
 
-                            Log.d("회원가입 서버통신", "성공")
-                            intent = Intent(this@SignUpActivity, SignInActivity::class.java)
-                            startActivity(intent)
+                    call: Call<ResponseSignData>,
+                    response: Response<ResponseSignData>
 
-                        } else {
-                            Log.d("회원가입 서버통신", "실패")
-                        }
+                ) {
+                    if (response.isSuccessful) {
+                        val data = response.body()?.data
+                        Toast.makeText(this@SignUpActivity, data?.nickname, Toast.LENGTH_LONG)
+                            .show()
 
+                        Log.d("회원가입 서버통신", "성공")
+                        moveSignInView()
+
+
+                    } else {
+                        Log.d("회원가입 서버통신", "실패")
                     }
 
-                    override fun onFailure(call: Call<ResponseSignData>, t: Throwable) {
-                        Log.d("NetworkTest", "error")
-                    }
-                })
+                }
 
-            }
-            }
+                override fun onFailure(call: Call<ResponseSignData>, t: Throwable) {
+                    Log.d("NetworkTest", "error")
+                }
+            })
 
+    }
 
-            }
+    private fun moveSignInView(){
+        intent = Intent(this@SignUpActivity, SignInActivity::class.java)
+        startActivity(intent)
+    }
+
 
 
 
