@@ -32,7 +32,6 @@ class SignInActivity : AppCompatActivity() {
         // 사용할 뷰에 대한 참조. .root로 get호출
         //setContentView로 xml받아오기!
 
-        signUp()
         initButtonClickEvent()
 
 
@@ -40,69 +39,79 @@ class SignInActivity : AppCompatActivity() {
         }
 
     private fun initButtonClickEvent(){
+        clickSignUp()
+        clickLoginBtn()
+
+    }
+
+    private fun clickLoginBtn(){
         binding.loginButton.setOnClickListener{
             val user_id  = binding.inputId.text.toString()
             val user_pwd = binding.inputPwd.text.toString()
 
 
-            //사용자가 입력한 값 스트링으로 받아오기
             if(user_id.isBlank() || user_pwd.isBlank()) {
-                //아이디가 비어있는 경우 실행함!!!
-                Toast.makeText(this,
+                Toast.makeText(
+                    this,
                     "아이디/비밀번호를 확인해주세요",
                     Toast.LENGTH_SHORT
                 ).show()
-                //가독성을 위해서 띄어주자
             }
-            else{
-                val requsetLoginData = RequsetLoginData(
-                        email = binding.inputId.text.toString(),
-                        password = binding.inputPwd.text.toString()
-                )
-
-                val call: Call<ResponseLoginData> = ServiceCreater.soptService
-                        .postLogin(requsetLoginData)
-
-                call.enqueue(object : Callback<ResponseLoginData> {
-                    override fun onResponse(
-                            call: Call<ResponseLoginData>,
-                            response: Response<ResponseLoginData>
-                    ) {
-                        if(response.isSuccessful){
-                            val data = response.body()?.data
-                            Toast.makeText(this@SignInActivity,data?.user_nickname,Toast.LENGTH_SHORT)
-                                    .show()
-
-                            Log.d("서버통신","어서와 서버통신은 처음이지?")
-                            intent = Intent(this@SignInActivity,HomeActivity::class.java)
-                            startActivity(intent)
-
-                        }else{
-                            Log.d("서버통신","실패")
-
-
-
-                        }
-
-                    }
-
-                    override fun onFailure(call: Call<ResponseLoginData>, t: Throwable) {
-                        Log.d("NetworkTest","error:$t")
-                    }
-
-
-                })
-
-            }
+            else{ netWorkSignIn() }
 
         }
+    }
+
+    private fun netWorkSignIn(){
+        val requsetLoginData = RequsetLoginData(
+            email = binding.inputId.text.toString(),
+            password = binding.inputPwd.text.toString()
+        )
+
+        val call: Call<ResponseLoginData> = ServiceCreater.soptService
+            .postLogin(requsetLoginData)
+
+        call.enqueue(object : Callback<ResponseLoginData> {
+            override fun onResponse(
+                call: Call<ResponseLoginData>,
+                response: Response<ResponseLoginData>
+            ) {
+
+                if(response.isSuccessful){
+                    val data = response.body()?.data
+
+                    Toast.makeText(
+                        this@SignInActivity,data?.user_nickname,
+                        Toast.LENGTH_SHORT)
+                        .show()
+
+                    Log.d("서버통신","성공")
+                    moveSignInView()
+
+                }
+
+                else{ Log.d("서버통신","실패") }
+
+            }
+
+            override fun onFailure(call: Call<ResponseLoginData>, t: Throwable) {
+                Log.d("NetworkTest","error:$t")
+            }
+
+
+        })
 
 
     }
 
+    private fun moveSignInView(){
+        intent = Intent(this@SignInActivity,HomeActivity::class.java)
+        startActivity(intent)
+    }
 
 
-    private fun signUp(){
+
+    private fun clickSignUp(){
         binding.signButton.setOnClickListener(){
             val nextIntent2 = Intent(this,SignUpActivity::class.java)
             startActivity(nextIntent2)
